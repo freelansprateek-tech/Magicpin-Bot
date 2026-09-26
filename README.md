@@ -61,3 +61,4 @@ python scripts/make_submission.py                             # regenerate submi
 ```
 
 Full build guide: `docs/DEVELOPMENT.md`. Deployment: `docs/DEPLOYMENT.md`. Decisions and data quirks: `PROGRESS.md`.
+# Magicpin-Bot
