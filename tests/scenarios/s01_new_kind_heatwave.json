@@ -1,0 +1,17 @@
+{
+  "name": "New trigger kind the dataset never uses (weather_heatwave)",
+  "why": "The judge injects new triggers; an unknown kind must still name the actual event (trigger relevance), not fall back to a generic nudge.",
+  "contexts": [
+    {"scope": "category", "id": "pharmacies", "seed": {"category": "pharmacies"}},
+    {"scope": "merchant", "id": "m_009_apollo_pharmacy_jaipur", "seed": {"file": "merchants_seed.json", "id": "m_009_apollo_pharmacy_jaipur"}},
+    {"scope": "trigger", "id": "trg_s01_heat", "payload": {
+      "id": "trg_s01_heat", "scope": "merchant", "kind": "weather_heatwave", "source": "external",
+      "merchant_id": "m_009_apollo_pharmacy_jaipur", "customer_id": null,
+      "payload": {"city": "Jaipur", "temperature_c": 44, "forecast_days": 3, "advisory": "IMD orange alert for heatwave"},
+      "urgency": 3, "suppression_key": "heat:jaipur:2026-04-27", "expires_at": "2026-04-30T00:00:00Z"}}
+  ],
+  "steps": [
+    {"tick": {"now": "2026-04-26T10:30:00Z", "available_triggers": ["trg_s01_heat"]},
+     "expect": {"count": 1, "send_as": "vera", "contains": ["Ramesh", "44"], "not_contains": ["guaranteed"]}}
+  ]
+}

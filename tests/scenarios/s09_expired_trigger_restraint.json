@@ -1,0 +1,12 @@
+{
+  "name": "Expired trigger with no judge hint -> stay quiet",
+  "why": "Restraint is rewarded: with an empty available_triggers list the bot picks from its own store and must skip triggers whose window has closed.",
+  "contexts": [
+    {"scope": "category", "id": "restaurants", "seed": {"category": "restaurants"}},
+    {"scope": "merchant", "id": "m_005_pizzajunction_restaurant_delhi", "seed": {"file": "merchants_seed.json", "id": "m_005_pizzajunction_restaurant_delhi"}},
+    {"scope": "trigger", "id": "trg_010_ipl_match_delhi", "seed": {"file": "triggers_seed.json", "id": "trg_010_ipl_match_delhi"}}
+  ],
+  "steps": [
+    {"tick": {"now": "2026-04-28T10:30:00Z", "available_triggers": []}, "expect": {"count": 0}}
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "Hindi WhatsApp-Business auto-reply, three times",
+  "why": "Auto-reply detection must work in Hindi too (brief Pattern B): nudge once, then wait, then end.",
+  "contexts": [
+    {"scope": "category", "id": "salons", "seed": {"category": "salons"}},
+    {"scope": "merchant", "id": "m_003_studio11_salon_hyderabad", "seed": {"file": "merchants_seed.json", "id": "m_003_studio11_salon_hyderabad"}},
+    {"scope": "trigger", "id": "trg_008_curious_ask_studio11", "seed": {"file": "triggers_seed.json", "id": "trg_008_curious_ask_studio11"}}
+  ],
+  "steps": [
+    {"tick": {"now": "2026-04-26T10:30:00Z", "available_triggers": ["trg_008_curious_ask_studio11"]},
+     "expect": {"count": 1, "cta_in": ["open_ended"]}},
+    {"reply": {"conversation_id": "$last", "merchant_id": "m_003_studio11_salon_hyderabad",
+               "message": "Aapki jaankari ke liye bahut-bahut shukriya. Main aapki yeh sabhi baatein hamari team tak pahuncha deti hoon.",
+               "received_at": "2026-04-26T10:31:00Z", "turn_number": 2},
+     "expect": {"action_in": ["send", "wait"]}},
+    {"reply": {"conversation_id": "$last", "merchant_id": "m_003_studio11_salon_hyderabad",
+               "message": "Aapki jaankari ke liye bahut-bahut shukriya. Main aapki yeh sabhi baatein hamari team tak pahuncha deti hoon.",
+               "received_at": "2026-04-26T10:32:00Z", "turn_number": 3},
+     "expect": {"action": "wait"}},
+    {"reply": {"conversation_id": "$last", "merchant_id": "m_003_studio11_salon_hyderabad",
+               "message": "Aapki jaankari ke liye bahut-bahut shukriya. Main aapki yeh sabhi baatein hamari team tak pahuncha deti hoon.",
+               "received_at": "2026-04-26T10:33:00Z", "turn_number": 4},
+     "expect": {"action": "end"}}
+  ]
+}

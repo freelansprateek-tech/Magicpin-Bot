@@ -1,0 +1,22 @@
+{
+  "name": "Proactive send -> abuse -> unrelated GST question",
+  "why": "Replay test 3: exit on hostility, then stay polite and on-mission; never pitch again after being told off.",
+  "contexts": [
+    {"scope": "category", "id": "restaurants", "seed": {"category": "restaurants"}},
+    {"scope": "merchant", "id": "m_005_pizzajunction_restaurant_delhi", "seed": {"file": "merchants_seed.json", "id": "m_005_pizzajunction_restaurant_delhi"}},
+    {"scope": "trigger", "id": "trg_011_review_theme_late_delivery", "seed": {"file": "triggers_seed.json", "id": "trg_011_review_theme_late_delivery"}},
+    {"scope": "trigger", "id": "trg_010_ipl_match_delhi", "seed": {"file": "triggers_seed.json", "id": "trg_010_ipl_match_delhi"}}
+  ],
+  "steps": [
+    {"tick": {"now": "2026-04-26T10:30:00Z", "available_triggers": ["trg_011_review_theme_late_delivery"]},
+     "expect": {"count": 1, "contains": ["Suresh", "50 mins"]}},
+    {"reply": {"conversation_id": "$last", "merchant_id": "m_005_pizzajunction_restaurant_delhi",
+               "message": "Why are you bothering me with this nonsense. Stop.", "received_at": "2026-04-26T10:35:00Z", "turn_number": 2},
+     "expect": {"action": "end"}},
+    {"reply": {"conversation_id": "$last", "merchant_id": "m_005_pizzajunction_restaurant_delhi",
+               "message": "Also can you file my GST return this month?", "received_at": "2026-04-26T10:37:00Z", "turn_number": 3},
+     "expect": {"action_in": ["end", "send"], "not_contains": ["Reply YES", "offer", "banner"]}},
+    {"tick": {"now": "2026-04-26T11:30:00Z", "available_triggers": ["trg_010_ipl_match_delhi"]},
+     "expect": {"count": 0}}
+  ]
+}

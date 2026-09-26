@@ -1,0 +1,22 @@
+{
+  "name": "Merchant performance update via higher version, then a stale lower version",
+  "why": "The bot must compose from the newest merchant version and ignore a late, lower version (409).",
+  "contexts": [
+    {"scope": "category", "id": "salons", "seed": {"category": "salons"}},
+    {"scope": "merchant", "id": "m_003_studio11_salon_hyderabad", "version": 1, "seed": {"file": "merchants_seed.json", "id": "m_003_studio11_salon_hyderabad"}},
+    {"scope": "merchant", "id": "m_003_studio11_salon_hyderabad", "version": 3, "seed": {"file": "merchants_seed.json", "id": "m_003_studio11_salon_hyderabad"},
+     "patch": {"performance": {"views": 3210, "calls": 41, "delta_7d": {"views_pct": -0.21, "calls_pct": -0.34}}}},
+    {"scope": "trigger", "id": "trg_s03_dip", "payload": {
+      "id": "trg_s03_dip", "scope": "merchant", "kind": "perf_dip", "source": "internal",
+      "merchant_id": "m_003_studio11_salon_hyderabad", "customer_id": null,
+      "payload": {"metric": "calls", "delta_pct": -0.34, "window": "7d", "vs_baseline": 62},
+      "urgency": 4, "suppression_key": "perf_dip:m_003:calls:2026-W18", "expires_at": "2026-05-10T00:00:00Z"}}
+  ],
+  "steps": [
+    {"push": {"scope": "merchant", "id": "m_003_studio11_salon_hyderabad", "version": 2,
+              "seed": {"file": "merchants_seed.json", "id": "m_003_studio11_salon_hyderabad"}},
+     "expect_status": 409},
+    {"tick": {"now": "2026-04-27T10:30:00Z", "available_triggers": ["trg_s03_dip"]},
+     "expect": {"count": 1, "contains": ["Lakshmi", "34%"], "not_contains": ["4,980", "+20%"]}}
+  ]
+}

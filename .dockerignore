@@ -1,0 +1,19 @@
+# Keep the image small and free of secrets.
+.env
+.env.*
+!.env.example
+.git
+.gitignore
+.venv
+venv
+__pycache__
+*.pyc
+.pytest_cache
+cache
+tests
+starter
+scripts
+docs
+submission.jsonl
+*.md
+.DS_Store

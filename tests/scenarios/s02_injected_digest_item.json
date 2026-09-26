@@ -1,0 +1,24 @@
+{
+  "name": "Mid-test digest injection (category version 2)",
+  "why": "Phase 3 pushes new digest items as a new category version; the next send must cite the NEW item, with its real source.",
+  "contexts": [
+    {"scope": "category", "id": "dentists", "seed": {"category": "dentists"}},
+    {"scope": "merchant", "id": "m_001_drmeera_dentist_delhi", "seed": {"file": "merchants_seed.json", "id": "m_001_drmeera_dentist_delhi"}},
+    {"scope": "category", "id": "dentists", "version": 2, "seed": {"category": "dentists"}, "append_digest": {
+      "id": "d_2026W18_sealant", "kind": "research",
+      "title": "Resin sealants on adult molars cut new occlusal caries by 27% over 3 years",
+      "source": "Indian Journal of Dental Research, May 2026", "trial_n": 860,
+      "patient_segment": "high_risk_adults",
+      "summary": "Adults with 2+ recent occlusal lesions benefited most.",
+      "actionable": "Consider sealants for high-risk adults at their next recall"}},
+    {"scope": "trigger", "id": "trg_s02_digest", "payload": {
+      "id": "trg_s02_digest", "scope": "merchant", "kind": "research_digest", "source": "external",
+      "merchant_id": "m_001_drmeera_dentist_delhi", "customer_id": null,
+      "payload": {"category": "dentists", "top_item_id": "d_2026W18_sealant"},
+      "urgency": 2, "suppression_key": "research:dentists:2026-W18", "expires_at": "2026-05-10T00:00:00Z"}}
+  ],
+  "steps": [
+    {"tick": {"now": "2026-04-27T10:30:00Z", "available_triggers": ["trg_s02_digest"]},
+     "expect": {"count": 1, "contains": ["Dr. Meera", "27%", "Indian Journal of Dental Research"], "not_contains": ["JIDA"]}}
+  ]
+}

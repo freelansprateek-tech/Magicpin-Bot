@@ -1,0 +1,29 @@
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Secrets — never commit the real .env
+.env
+.env.*
+!.env.example
+
+# Python build / cache files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Generated dataset (recreate with generate_dataset.py)
+expanded/
+starter/dataset/expanded/
+
+# LLM response cache and runtime files
+cache/
+*.log
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.idea/

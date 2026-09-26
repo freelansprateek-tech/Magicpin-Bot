@@ -1,0 +1,37 @@
+# Render Blueprint — New → Blueprint → pick this GitHub repo.
+# Render builds the Dockerfile and sets $PORT itself.
+services:
+  - type: web
+    name: vera-bot
+    runtime: docker
+    # "starter" (paid) is always on. The FREE plan sleeps after 15 min idle and takes
+    # ~30-60 s to wake — longer than the judge's 30 s timeout, so healthz would fail.
+    plan: starter
+    region: singapore          # closest Render region to India
+    numInstances: 1            # state is in memory: exactly ONE instance
+    healthCheckPath: /v1/healthz
+    autoDeploy: true
+    envVars:
+      - key: LLM_PROVIDER
+        value: openai
+      - key: LLM_MODEL
+        value: gpt-4o-mini
+      - key: LLM_TIMEOUT_SECONDS
+        value: "8"
+      - key: LLM_MAX_PARALLEL
+        value: "8"
+      - key: LOG_LEVEL
+        value: info
+      # sync: false = Render asks you for the value in the dashboard; it is never stored in git.
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: BOT_TEAM_NAME
+        sync: false
+      - key: BOT_TEAM_MEMBERS
+        sync: false
+      - key: BOT_CONTACT_EMAIL
+        sync: false
+      - key: BOT_VERSION
+        value: 1.0.0
+      - key: BOT_SUBMITTED_AT
+        sync: false

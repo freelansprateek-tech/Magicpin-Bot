@@ -1,0 +1,17 @@
+{
+  "name": "Hinglish merchant commits mid-conversation",
+  "why": "Intent transition in Hindi-English: 'haan kar do' must switch to action immediately, answered in Hinglish, with no re-qualifying question.",
+  "contexts": [
+    {"scope": "category", "id": "dentists", "seed": {"category": "dentists"}},
+    {"scope": "merchant", "id": "m_001_drmeera_dentist_delhi", "seed": {"file": "merchants_seed.json", "id": "m_001_drmeera_dentist_delhi"}},
+    {"scope": "trigger", "id": "trg_023_competitor_opened_dentist", "seed": {"file": "triggers_seed.json", "id": "trg_023_competitor_opened_dentist"}}
+  ],
+  "steps": [
+    {"tick": {"now": "2026-04-26T10:30:00Z", "available_triggers": ["trg_023_competitor_opened_dentist"]},
+     "expect": {"count": 1, "contains": ["Smile Studio", "1.3"]}},
+    {"reply": {"conversation_id": "$last", "merchant_id": "m_001_drmeera_dentist_delhi",
+               "message": "haan theek hai, kar do", "received_at": "2026-04-26T10:34:00Z", "turn_number": 2},
+     "expect": {"action": "send", "cta_in": ["binary_confirm_cancel", "binary_yes_no", "none"],
+                "not_contains": ["would you", "do you", "can you tell", "what if", "how about"]}}
+  ]
+}

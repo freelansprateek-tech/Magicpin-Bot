@@ -1,0 +1,36 @@
+# Fly.io config — `fly launch --no-deploy --copy-config`, then `fly secrets set ...`, then `fly deploy`.
+# Change `app` to a globally unique name before the first launch.
+app = "vera-bot-yourname"
+primary_region = "bom"            # Mumbai
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "8080"
+  LLM_PROVIDER = "openai"
+  LLM_MODEL = "gpt-4o-mini"
+  LLM_TIMEOUT_SECONDS = "8"
+  LLM_MAX_PARALLEL = "8"
+  LOG_LEVEL = "info"
+  BOT_VERSION = "1.0.0"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  # Never scale to zero: a stopped machine takes seconds to boot and loses the
+  # in-memory context the judge pushed at warmup.
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+
+  [[http_service.checks]]
+    grace_period = "10s"
+    interval = "30s"
+    method = "GET"
+    path = "/v1/healthz"
+    timeout = "5s"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"

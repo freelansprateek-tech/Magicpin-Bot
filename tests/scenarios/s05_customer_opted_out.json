@@ -1,0 +1,16 @@
+{
+  "name": "Customer trigger for someone who opted out",
+  "why": "Consent: never message the customer. The merchant gets a note instead, and it must not claim we contacted them.",
+  "contexts": [
+    {"scope": "category", "id": "dentists", "seed": {"category": "dentists"}},
+    {"scope": "merchant", "id": "m_001_drmeera_dentist_delhi", "seed": {"file": "merchants_seed.json", "id": "m_001_drmeera_dentist_delhi"}},
+    {"scope": "customer", "id": "c_001_priya_for_m001", "seed": {"file": "customers_seed.json", "id": "c_001_priya_for_m001"},
+     "patch": {"preferences": {"reminder_opt_in": false}}},
+    {"scope": "trigger", "id": "trg_003_recall_due_priya", "seed": {"file": "triggers_seed.json", "id": "trg_003_recall_due_priya"}}
+  ],
+  "steps": [
+    {"tick": {"now": "2026-04-26T10:30:00Z", "available_triggers": ["trg_003_recall_due_priya"]},
+     "expect": {"count": 1, "send_as": "vera", "customer_id": null,
+                "contains": ["Dr. Meera", "opted out", "haven't contacted"], "not_contains": ["Hi Priya", "Wed 5 Nov"]}}
+  ]
+}
