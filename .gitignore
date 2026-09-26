@@ -27,3 +27,5 @@ cache/
 .DS_Store
 Thumbs.db
 .idea/
+Dockerfile
+.dockerignore
